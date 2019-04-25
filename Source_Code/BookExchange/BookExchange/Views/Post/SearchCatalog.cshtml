@@ -1,0 +1,77 @@
+﻿@model IEnumerable<BookExchange.Models.DBModels.Sach>
+
+@{
+    ViewData["Title"] = "SearchCatalog";
+}
+
+<h1>SearchCatalog</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TenSach)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DaBan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MoTa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NgayDang)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaKhNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaTlNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaTtNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenSach)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DaBan)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MoTa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayDang)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaKhNavigation.DienThoai)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaTlNavigation.TenTl)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaTtNavigation.TenTt)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.MaSach">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.MaSach">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.MaSach">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
