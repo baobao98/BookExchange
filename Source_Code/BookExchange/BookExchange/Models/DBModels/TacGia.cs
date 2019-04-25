@@ -7,6 +7,8 @@ namespace BookExchange.Models.DBModels
     {
         public int MaTg { get; set; }
         public string TenTg { get; set; }
-        public int MaSach { get; set; }
+        public string MaSach { get; set; }
+
+        public virtual Sach MaSachNavigation { get; set; }
     }
 }
