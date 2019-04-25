@@ -303,7 +303,9 @@ figure {
   margin: 0; }
 
 form {
-  margin: 0; }
+  margin: 0;
+  display: inherit;
+ }
 
 fieldset {
   border: 1px solid #c0c0c0;
@@ -654,7 +656,7 @@ a {
   background-size: cover;
   background-position: center center; }
 .bg-image--6 {
-  background-image: url(images/bg/6.jpg);
+  background-image: url(images/bg/bg3.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center; }
@@ -5909,7 +5911,7 @@ a.checkout__title {
 .shot__byselect {
   border: 1px solid #e1e1e1;
   color: #898888;
-  height: 30px;
+  height: 42px;
   margin-left: 10px;
   padding: 0 10px; }
 .list__view {
