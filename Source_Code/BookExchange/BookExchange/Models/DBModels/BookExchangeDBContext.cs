@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace BookExchange.Models
+namespace BookExchange.Models.DBModels
 {
     public partial class BookExchangeDBContext : DbContext
     {
