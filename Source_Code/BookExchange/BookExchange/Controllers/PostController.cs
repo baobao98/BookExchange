@@ -13,7 +13,7 @@ namespace BookExchange.Controllers
             return View();
         }
 
-        public IActionResult Detail(int id)
+        public IActionResult Detail(string id = "detail")
         {
             return View();
         }

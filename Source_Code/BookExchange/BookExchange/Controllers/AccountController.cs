@@ -21,28 +21,34 @@ namespace BookExchange.Controllers
             return View();
         }
 
-        [Route("login")]
+        [Route("dangnhap")]
         [HttpGet]
         public IActionResult Login()
         {
             return View();
         }
 
-        [Route("login")]
+        [Route("dangnhap")]
         [HttpPost]
         public async Task<IActionResult> Login(Account account, bool rememberme)
         {
-            string mk1 = HashPwdTool.GeneratePassword("1");
-            account = db.Account.Where(n => n.TaiKhoan == account.TaiKhoan && HashPwdTool.CheckPassword(account.MatKhau, n.MatKhau)).SingleOrDefault();
-
-            if (account == null)
+            try
             {
-                ModelState.AddModelError(string.Empty, "Tài khoản hoặc mật khẩu không đúng");
-                ViewBag.Error = "Username or Password was incorrect";
+                account = db.Account.Where(n => n.TaiKhoan == account.TaiKhoan && HashPwdTool.CheckPassword(account.MatKhau, n.MatKhau)).SingleOrDefault();
+
+                if (account == null)
+                {
+                    ModelState.AddModelError(string.Empty, "Tài khoản hoặc mật khẩu không đúng");
+                    return View();
+                }
+
+                await AuthenticateUser(account, rememberme);
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError(string.Empty, "Lỗi hệ thống. Vui lòng thử lại sau.");
                 return View();
             }
-
-            await AuthenticateUser(account, rememberme);
 
             return RedirectToAction("Index", "Home");
         }
