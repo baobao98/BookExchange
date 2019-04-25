@@ -30,12 +30,12 @@ namespace BookExchange.Controllers
             //List<string> anh=_context.AnhSach.Where(a=>a.MaSach==id)
             return View("Detail", sachDetial);
         }
-        public IActionResult SearchCatalog(int idTL)
+        public IActionResult SearchCatalog(int idTL=4)
         {
             //var Theloai = _context.TheLoai.Where(t => t.MaTl == idTL).SingleOrDefault();
             List<Sach> ds = new List<Sach>();
             ds = _context.Sach.Where(s => s.MaTl == idTL).ToList();
-            return View("CatalogDetail",ds);
+            return View("SearchCatalog",ds);
         }
     }
 }
