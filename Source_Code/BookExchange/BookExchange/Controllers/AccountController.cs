@@ -21,27 +21,28 @@ namespace BookExchange.Controllers
             return View();
         }
 
-        [Route("signin")]
+        [Route("login")]
         [HttpGet]
-        public IActionResult SignIn()
+        public IActionResult Login()
         {
             return View();
         }
 
-        [Route("signin")]
+        [Route("login")]
         [HttpPost]
-        public async Task<IActionResult> SignIn(Account account)
+        public async Task<IActionResult> Login(Account account, bool rememberme)
         {
             string mk1 = HashPwdTool.GeneratePassword("1");
             account = db.Account.Where(n => n.TaiKhoan == account.TaiKhoan && HashPwdTool.CheckPassword(account.MatKhau, n.MatKhau)).SingleOrDefault();
 
             if (account == null)
             {
+                ModelState.AddModelError(string.Empty, "Tài khoản hoặc mật khẩu không đúng");
                 ViewBag.Error = "Username or Password was incorrect";
                 return View();
             }
 
-            await AuthenticateUser(account, false);
+            await AuthenticateUser(account, rememberme);
 
             return RedirectToAction("Index", "Home");
         }
