@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RES.Models.Security
+namespace RES.Models.Securities
 {
     public class HashPwdTool
     {
