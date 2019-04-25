@@ -41,13 +41,11 @@ namespace BookExchange.Models.DBModels
             {
                 entity.HasKey(e => e.MaTk);
 
-                entity.Property(e => e.MaTk)
-                    .HasColumnName("MaTK")
-                    .ValueGeneratedOnAdd();
+                entity.Property(e => e.MaTk).HasColumnName("MaTK");
 
                 entity.Property(e => e.MatKhau)
                     .IsRequired()
-                    .HasMaxLength(50)
+                    .HasMaxLength(200)
                     .IsUnicode(false);
 
                 entity.Property(e => e.TaiKhoan)
@@ -60,26 +58,43 @@ namespace BookExchange.Models.DBModels
             {
                 entity.HasKey(e => e.Idanh);
 
-                entity.Property(e => e.Idanh)
-                    .HasColumnName("IDAnh")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.Idanh).HasColumnName("IDAnh");
 
                 entity.Property(e => e.ImgUrl)
                     .HasColumnName("imgURL")
                     .HasMaxLength(50)
                     .IsUnicode(false);
+
+                entity.Property(e => e.MaSach)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.MaSachNavigation)
+                    .WithMany(p => p.AnhSach)
+                    .HasForeignKey(d => d.MaSach)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_AnhSach_Sach");
             });
 
             modelBuilder.Entity<LoaiMuonNhan>(entity =>
             {
                 entity.HasKey(e => e.IdloaiMuonNhan);
 
-                entity.Property(e => e.IdloaiMuonNhan)
-                    .HasColumnName("IDLoaiMuonNhan")
-                    .HasMaxLength(10)
-                    .ValueGeneratedNever();
+                entity.Property(e => e.IdloaiMuonNhan).HasColumnName("IDLoaiMuonNhan");
+
+                entity.Property(e => e.MaSach)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.MaTl).HasColumnName("MaTL");
+
+                entity.HasOne(d => d.MaSachNavigation)
+                    .WithMany(p => p.LoaiMuonNhan)
+                    .HasForeignKey(d => d.MaSach)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_LoaiMuonNhan_Sach");
 
                 entity.HasOne(d => d.MaTlNavigation)
                     .WithMany(p => p.LoaiMuonNhan)
@@ -96,6 +111,8 @@ namespace BookExchange.Models.DBModels
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .ValueGeneratedNever();
+
+                entity.Property(e => e.Gia).HasColumnType("money");
 
                 entity.Property(e => e.MaKh).HasColumnName("MaKH");
 
@@ -132,14 +149,23 @@ namespace BookExchange.Models.DBModels
             {
                 entity.HasKey(e => e.MaTg);
 
-                entity.Property(e => e.MaTg)
-                    .HasColumnName("MaTG")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.MaTg).HasColumnName("MaTG");
+
+                entity.Property(e => e.MaSach)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.TenTg)
                     .IsRequired()
                     .HasColumnName("TenTG")
                     .HasMaxLength(50);
+
+                entity.HasOne(d => d.MaSachNavigation)
+                    .WithMany(p => p.TacGia)
+                    .HasForeignKey(d => d.MaSach)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_TacGia_Sach");
             });
 
             modelBuilder.Entity<TheLoai>(entity =>
@@ -160,9 +186,7 @@ namespace BookExchange.Models.DBModels
             {
                 entity.HasKey(e => e.MaTt);
 
-                entity.Property(e => e.MaTt)
-                    .HasColumnName("MaTT")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.MaTt).HasColumnName("MaTT");
 
                 entity.Property(e => e.TenTt)
                     .IsRequired()
@@ -174,9 +198,7 @@ namespace BookExchange.Models.DBModels
             {
                 entity.HasKey(e => e.MaKh);
 
-                entity.Property(e => e.MaKh)
-                    .HasColumnName("MaKH")
-                    .ValueGeneratedOnAdd();
+                entity.Property(e => e.MaKh).HasColumnName("MaKH");
 
                 entity.Property(e => e.DiaChi).HasMaxLength(50);
 

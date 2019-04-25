@@ -1,4 +1,4 @@
-﻿
+﻿@model BookExchange.Models.DBModels.Sach
 @{
     ViewData["Title"] = "Detail";
 }
@@ -12,37 +12,43 @@
                         <div class="col-lg-6 col-12">
                             <div class="wn__fotorama__wrapper">
                                 <div class="fotorama wn__fotorama__action" data-nav="thumbs">
-                                    <a href="~/images/product/1.jpg"><img src="~/images/product/1.jpg" alt=""></a>
-                                    <a href="~/images/product/2.jpg"><img src="~/images/product/2.jpg" alt=""></a>
-                                    <a href="~/images/product/3.jpg"><img src="~/images/product/3.jpg" alt=""></a>
-                                    <a href="~/images/product/4.jpg"><img src="~/images/product/4.jpg" alt=""></a>
-                                    <a href="~/images/product/5.jpg"><img src="~/images/product/5.jpg" alt=""></a>
-                                    <a href="~/images/product/6.jpg"><img src="~/images/product/6.jpg" alt=""></a>
-                                    <a href="~/images/product/7.jpg"><img src="~/images/product/7.jpg" alt=""></a>
-                                    <a href="~/images/product/8.jpg"><img src="~/images/product/8.jpg" alt=""></a>
+                                    @foreach (var sach in Model.AnhSach)
+                                    {
+                                        var path = "~/images/img-post/" + @sach.ImgUrl;
+                                        //var path = "~/images/img-post/5-centimet.gif";
+                                        <a href="#"><img src="@Url.Content(path)" alt=""></a>
+                                    }
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-6 col-12">
                             <div class="product__info__main">
-                                 <h1><span>Tên cuốn sách</span></h1> 
-                                 <h4>Tác Giả</h4>
+                                 <h1><span>Tên cuốn sách: @Model.TenSach</span></h1> 
+                                 <h4>Tác Giả: @Model.TacGia.ElementAt(0).TenTg</h4>
                                  
                                  <div class="product__overview">
-                                     <p>Người đăng:</p>
-                                     <p>Ngày đăng:</p>
+                                     <p>Người đăng: @Model.MaKhNavigation.HoTen</p>
+                                     <p>Ngày đăng: @Model.NgayDang</p>
                                      <h5>Thông tin liên hệ</h5>
                                      <!--Thông tin liên hệ-->
-                                     <p>SDT: Người đăng</p>
-                                     <p>Email</p>
-                                     <p>Giới tính: </p>
-                                     <p>Tình trạng cuốn sách:</p>
-                                     <p>Hình thức:</p>
+                                     <p>SDT: @Model.MaKhNavigation.DienThoai</p>
+                                     <p>Email: @Model.MaKhNavigation.Email</p>
+                                     <p>Giới tính: @Model.MaKhNavigation.GioiTinh</p>
+                                     @if (@Model.DaBan == true)
+                                     {
+                                     <p>Tình trạng cuốn sách: Đã bán </p>
+                                     }
+                                     else
+                                     {
+                                     <p>Tình trạng cuốn sách: Chưa bán </p>
+                                     }
+
+                                     <p>Hình thức: @Model.MaTtNavigation.TenTt</p>
                                  </div>
                                 <div class="product_meta">
                                     <span class="posted_in">
                                         Thể loại sách:
-                                        <a href="#">Thể loại sách điển ở đây</a>
+                                        <a href="#">@Model.MaTlNavigation.TenTl</a>
                                     </span>
                                 </div>
                             </div>
@@ -57,7 +63,7 @@
                         <!-- Start Single Tab Content -->
                         <div class="pro__tab_label tab-pane fade show active" id="nav-details" role="tabpanel">
                             <div class="description__attribute">
-                                Mô tả chi tiêt cuốn sách (Thuộc tính mô tả trong csdl)
+                                @Model.MoTa
                             </div>
                         </div>
                         <!-- End Single Tab Content -->

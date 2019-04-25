@@ -22,12 +22,13 @@ namespace BookExchange.Controllers
         {
             return View();
         }
-        
-        public IActionResult Detail(string id)
+
+        public IActionResult Detail(string id = "nam-centimet-tren-giay")
         {
             //id = "a";
-            var sachDetial = _context.Sach.Where(s => s.MaSach == id).Include(x=>x.MaKhNavigation).SingleOrDefault(); 
-            return View("Detail",sachDetial);
+            var sachDetial = _context.Sach.Where(s => s.MaSach == id).Include(x => x.MaKhNavigation).Include(x => x.AnhSach).Include(x => x.MaKhNavigation).Include(x => x.MaTtNavigation).Include(x=>x.TacGia).Include(x=>x.MaTlNavigation).SingleOrDefault();
+            //List<string> anh=_context.AnhSach.Where(a=>a.MaSach==id)
+            return View("Detail", sachDetial);
         }
         public IActionResult SearchCatalog(int idTL)
         {
