@@ -2467,12 +2467,13 @@ nav.menu {
 	  z-index: 1;
 	  transition:.4s;
 	  margin-bottom:8px;
-	}
+  }
+  
 	.product__hover--content {
 	  visibility: hidden;
 	  opacity:0;
 	}
-	.product:hover .product__content .action{opacity:1;visibility:visible;}
+	
 	.product:hover .product__hover--content{opacity:1;visibility:visible;display:block;}
       .product .product__content .action .actions_inner .add_to_links li {
         margin-bottom: 4px;
@@ -2498,8 +2499,8 @@ nav.menu {
             color:#fff;
               background-color: #ce7852; }
 			  .product:hover .product__content h4,.product:hover .product__content ul.prize {
-			  opacity:0;
-			  visibility:hidden;
+			  opacity:1;
+			  visibility:visible;
 			  transition: all 0.2s ease 0s;
 			}
 			
@@ -5156,7 +5157,7 @@ h3.widget-title-modal {
       margin: 0 0 10px;
       line-height: 2;
       color: #333;
-      font-size: 12px;
+      font-size: 15px;
       display: block; }
       .account__form .input__box label span {
         color: #e59285; }
@@ -5168,9 +5169,10 @@ h3.widget-title-modal {
       width: 100%;
       padding: 0 0 0 10px; }
   .account__form .form__btn button {
-    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    background-color: black ;
+
     border: 2px solid #333;
-    color: #333;
+    color: whitesmoke;
     display: inline-block;
     font-size: 12px;
     font-weight: 700;
