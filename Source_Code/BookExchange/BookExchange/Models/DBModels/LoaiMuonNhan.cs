@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BookExchange.Models
+namespace BookExchange.Models.DBModels
 {
     public partial class LoaiMuonNhan
     {
