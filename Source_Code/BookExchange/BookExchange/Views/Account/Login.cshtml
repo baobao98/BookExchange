@@ -10,29 +10,29 @@
         <div class="row">
             <div class="col-lg-6 col-12">
                 <div class="my__account__wrapper">
-                    <h3 class="account__title">Login</h3>
+                    <h3 class="account__title mb-5">Đăng nhập</h3>
                     <form asp-action="Login" asp-controller="Account">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="account__form">
                             <div class="input__box">
-                                <label>Username <span>*</span></label>
+                                <label>Tài khoản <span>*</span></label>
                                 <input asp-for="TaiKhoan" class="form-control" />
                                 <span asp-validation-for="TaiKhoan" class="text-danger"></span>
                             </div>
                             <div class="input__box">
-                                <label>Password<span>*</span></label>
+                                <label>Mật khẩu<span>*</span></label>
                                 <input asp-for="MatKhau" type="password" class="form-control" />
                                 <span asp-validation-for="MatKhau" class="text-danger"></span>
                             </div>
                             <div class="form__btn">
-                                <button>Login</button>
+                                <button>Đăng nhập</button>
                                 <label class="label-for-checkbox">
-                                    <input id="rememberme" class="input-checkbox" name="rememberme" value="forever" type="checkbox">
-                                    <span>Remember me</span>
+                                    <input id="rememberme" class="input-checkbox" name="rememberme" value="true" type="checkbox">
+                                    <span>Ghi nhớ đăng nhập</span>
                                 </label>
                             </div>
                             <br />
-                            Bạn chưa có tài khoản?   <a class="" asp-action="Create" asp-controller="User">Đăng ký</a>
+                            Bạn chưa có tài khoản?   <a class="" asp-action="Signin" asp-controller="User">Đăng ký</a>
                         </div>
                     </form>
                 </div>

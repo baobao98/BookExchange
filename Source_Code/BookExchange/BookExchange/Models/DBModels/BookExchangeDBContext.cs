@@ -43,7 +43,7 @@ namespace BookExchange.Models.DBModels
 
                 entity.Property(e => e.MaTk)
                     .HasColumnName("MaTK")
-                    .ValueGeneratedNever();
+                    .ValueGeneratedOnAdd();
 
                 entity.Property(e => e.MatKhau)
                     .IsRequired()
@@ -176,7 +176,7 @@ namespace BookExchange.Models.DBModels
 
                 entity.Property(e => e.MaKh)
                     .HasColumnName("MaKH")
-                    .ValueGeneratedNever();
+                    .ValueGeneratedOnAdd();
 
                 entity.Property(e => e.DiaChi).HasMaxLength(50);
 
