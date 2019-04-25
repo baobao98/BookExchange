@@ -5145,7 +5145,7 @@ h3.widget-title-modal {
 .account__form {
   border: 1px solid #d3ced2;
   border-radius: 5px;
-  margin: 2em 0;
+  /*margin: 2em 0;*/
   padding: 20px;
   text-align: left; }
   .account__form .input__box {
