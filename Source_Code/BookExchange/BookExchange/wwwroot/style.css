@@ -2056,7 +2056,7 @@ Elements Styles
         z-index: 2;
     }
 
-        .minisearch .field__search .action a i {
+        .minisearch .field__search .action button i {
             color: #fff;
             display: inline-block;
             font-size: 26px;
@@ -2067,6 +2067,11 @@ Elements Styles
             top: 0;
             width: 60px;
         }
+
+.btnminisearch {
+    background: none;
+    border: none;
+}
 
 .yellow--color.block-bg .close__wrap:hover,
 .yellow--color.box-menu-content .ppnav .ppmainmenu li:hover a,
@@ -3614,6 +3619,8 @@ nav.menu {
 
 .product.product__style--3 .product__thumb {
     transition: all 0.3s ease-in-out 0s;
+    height: 350px;
+    width: auto;
 }
 
     .product.product__style--3 .product__thumb .action .actions_inner .add_to_links li a.cart {
