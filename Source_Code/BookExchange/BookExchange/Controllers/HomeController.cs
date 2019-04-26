@@ -20,11 +20,24 @@ namespace BookExchange.Controllers
 
         public IActionResult Index()
         {
-            var ListSach = _context.Sach.Include(m => m.MaKhNavigation).Include(m => m.TacGia).Include(m => m.MaTtNavigation).Include(x => x.AnhSach).ToList().Take(5);
+            DateTime DateNow = DateTime.Now;
+            DateTime end = new DateTime(2019, 4, 25);
+            var ListSachMoi = _context.Sach.Where(m => (DateNow-m.NgayDang).Days <= 7).Include(m => m.MaKhNavigation).Include(m => m.TacGia).Include(m => m.MaTtNavigation).Include(x => x.AnhSach).ToList();
+            var ListAllSach = _context.Sach.Include(m => m.MaKhNavigation).Include(m => m.TacGia).Include(m => m.MaTtNavigation).Include(x => x.AnhSach).ToList();
+            var ListKinhTe = _context.Sach.Where(m=>m.MaTlNavigation.TenTl=="Kinh tế").Include(m => m.MaKhNavigation).Include(m => m.TacGia).Include(m => m.MaTtNavigation).Include(x => x.AnhSach).ToList();
+            var ListTapChi = _context.Sach.Where(m => m.MaTlNavigation.TenTl == "Tạp chí").Include(m => m.MaKhNavigation).Include(m => m.TacGia).Include(m => m.MaTtNavigation).Include(x => x.AnhSach).ToList();
+            var ListTruyenTranh = _context.Sach.Where(m => m.MaTlNavigation.TenTl == "Truyện tranh").Include(m => m.MaKhNavigation).Include(m => m.TacGia).Include(m => m.MaTtNavigation).Include(x => x.AnhSach).ToList();
+            var ListThieuNhi = _context.Sach.Where(m => m.MaTlNavigation.TenTl == "Thiếu nhi").Include(m => m.MaKhNavigation).Include(m => m.TacGia).Include(m => m.MaTtNavigation).Include(x => x.AnhSach).ToList();
 
             SachViewModel viewmodel = new SachViewModel()
             {
-                saches = ListSach
+                SachKinhTe=ListKinhTe,
+                SachMoi=ListSachMoi,
+                AllSach = ListAllSach,
+                SachTapChi=ListTapChi,
+                SachThieuNhi=ListThieuNhi,
+                SachTruyenTranh=ListTruyenTranh
+                
             };
 
           

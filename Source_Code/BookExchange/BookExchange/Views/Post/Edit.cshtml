@@ -1,0 +1,119 @@
+﻿@model BookExchange.Models.DBModels.Sach
+
+@{
+    ViewData["Title"] = "Edit";
+
+    List<TheLoai> lstTheLoai = ViewBag.lstTheLoai;
+}
+
+<section class="my_account_area pt--80 pb--55 bg--white">
+    <form asp-action="Edit" asp-controller="Post" method="post">
+        <div class="container margin-center row" style="">
+            <h3 class="col-12 text-center mb-5 account__title">Chỉnh sửa bài đăng</h3>
+            <div asp-validation-summary="ModelOnly" class="col-12 text-danger"></div>
+
+            <div class="col-lg-6 col-sm-12">
+                <div class="my__account__wrapper">
+                    <div class="account__form">
+                        <div class="input__box" id="masach" style="display: none">
+                            <input asp-for="MaSach" class="form-control" />
+                        </div>
+                        <div class="input__box">
+                            <label>Tên sách <span>*</span></label>
+                            <input asp-for="TenSach" class="form-control" />
+                            <span asp-validation-for="TenSach" class="text-danger"></span>
+                        </div>
+                        <div class="input__box">
+                            <label>Trạng thái <span>*</span></label>
+                            <select asp-for="MaTt" class="form-control" id="trangthai" asp-items="ViewBag.MaTt">
+                                <option value="1">Cho mượn</option>
+                                <option value="2">Bán</option>
+                                <option value="3">Trao đổi</option>
+                            </select>
+                            <span asp-validation-for="MaTt" class="text-danger"></span>
+                        </div>
+                        <div class="input__box">
+                            <label>Thể loại <span>*</span></label>
+                            <select asp-for="MaTl" class="form-control" asp-items="ViewBag.MaTl">
+                                @{
+                                    foreach (var item in lstTheLoai)
+                                    {
+                                        <option value="@item.MaTl">@item.TenTl</option>
+                                    }
+                                }
+                            </select>
+                            <span asp-validation-for="MaTl" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-sm-12">
+                <div class="account__form height-100">
+                    <div id="txt_gia" class="input__box">
+                        <label>Giá <span>*</span></label>
+                        <input asp-for="Gia" class="form-control" />
+                        <span asp-validation-for="Gia" class="text-danger"></span>
+                    </div>
+                    <div class="input__box">
+                        <label>Mô tả </label>
+                        <textarea asp-for="MoTa" class="form-control" rows="5"></textarea>
+                        <span asp-validation-for="MoTa" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="account__form col-12 btn_register">
+                <div class="form__btn">
+                    <button id="submit">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<script>
+
+    
+
+    $(document).ready(function () {
+        $("#masach").hide().html();
+
+        $("#trangthai").change(function () {
+
+            var selected = $(this).children("option:selected").val();
+
+            if (selected == 2) {
+                $("#txt_gia").show().html();
+            } else {
+                $("#txt_gia").hide().html();
+            }
+        });
+
+        var trangthai = @Model.MaTt;
+
+        if (trangthai !== 2) {
+            $("#txt_gia").hide().html();
+        }
+
+        //$("#textdanger-password").hide().html();
+        //$("#textdanger-repassword").hide().html();
+        //$("#submit").click(function () {
+
+        //    var username = $("#username").val();
+        //    var password = $("#password").val();
+        //    var re_password = $("#re_password").val();
+        //    if (username == '') {
+        //        $("#textdanger-username").html("Tài khoản không được để trống").show();
+        //        return false;
+        //    }
+        //    if (password == '') {
+        //        $("#textdanger-password").html("Mật khẩu không được để trống").show();
+        //        return false;
+        //    }
+        //    if (re_password == '') {
+        //        $("#textdanger-repassword").html("Bạn cần nhập lại mật khẩu").show();
+        //        return false;
+        //    }
+        //});
+    });
+</script>

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BookExchange.Models.DBModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 using BookExchange.Models;
 
 namespace BookExchange.Controllers
@@ -38,14 +39,14 @@ namespace BookExchange.Controllers
             Sach sach = new Sach
             {
                 MaSach = idUser.ToString() + DateTime.Now.ToString(),
-                TenSach=viewModel.TenSach,
-                MaKh=idUser,
-                MaTt=viewModel.MaTt,
-                MaTl=viewModel.MaTl,
-                MoTa=viewModel.MoTa,
-                Gia=viewModel.Gia,
-                NgayDang=DateTime.Now,
-                DaBan=false
+                TenSach = viewModel.TenSach,
+                MaKh = idUser,
+                MaTt = viewModel.MaTt,
+                MaTl = viewModel.MaTl,
+                MoTa = viewModel.MoTa,
+                Gia = viewModel.Gia,
+                NgayDang = DateTime.Now,
+                DaBan = false
             };
 
 
@@ -109,6 +110,112 @@ namespace BookExchange.Controllers
 
                 return View("Search", lstSach.Take(12).ToList());
             }
+        }
+
+        [Route("post-manager")]
+        public IActionResult Manager()
+        {
+            int idUser = int.Parse(HttpContext.Session.GetString("IdAccount") ?? "0");
+
+            if (idUser == 0)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            List<Sach> lstPost = _context.Sach.Where(n => n.MaKhNavigation.IdaccountNavigation.MaTk == idUser && n.DaBan == false).Include(n => n.MaTlNavigation).Include(n => n.AnhSach).Include(n => n.MaTtNavigation).ToList();
+
+            return View(lstPost);
+        }
+
+        public IActionResult Delete(string id)
+        {
+            Sach sach = _context.Sach.Find(id);
+
+            if (sach != null)
+            {
+                try
+                {
+                    sach.DaBan = true;
+                    _context.SaveChanges();
+                }
+                catch (Exception)
+                {
+
+                }
+            }
+
+            return RedirectToAction("Manager");
+        }
+
+        [Route("post-edit")]
+        public IActionResult Edit(string id)
+        {
+            try
+            {
+                Sach sach = _context.Sach.Where(n => n.MaSach == id).Include(n => n.MaTlNavigation).Include(n => n.MaTtNavigation).FirstOrDefault();
+
+                if (sach != null)
+                {
+                    List<TheLoai> lstTL = _context.TheLoai.ToList();
+                    ViewBag.lstTheLoai = lstTL;
+
+                    return View(sach);
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Manager");
+            }
+        }
+
+        [Route("post-edit")]
+        [HttpPost]
+        public async Task<IActionResult> EditAsync([Bind("MaSach,TenSach,MaTt,MaTl,Gia,MoTa")] Sach sach)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    Sach sachDB = _context.Sach.Find(sach.MaSach);
+                    sachDB.TenSach = sach.TenSach;
+                    sachDB.MaTl = sach.MaTl;
+                    sachDB.MaTt = sach.MaTt;
+                    sachDB.MoTa = sach.MoTa;
+                    if (sach.MaTt != 2)
+                    {
+                        sachDB.Gia = null;
+                    }
+                    else
+                    {
+                        sachDB.Gia = sach.Gia;
+                    }
+
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!SachExists(sach.MaSach))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction("Manager");
+            }
+
+            return View(sach);
+        }
+
+        private bool SachExists(string id)
+        {
+            return _context.Sach.Any(e => e.MaSach == id);
         }
     }
 }

@@ -74,7 +74,7 @@
                                             }
                                         </div>
                                         <div class="product__content content--center">
-                                            <h4><a href="single-product.html">@item.TenSach</a></h4>
+                                            <h4><a asp-action="Detail" asp-controller="Post" asp-route-id="@item.MaSach">@item.TenSach</a></h4>
 
                                             @if (item.Gia != null)
                                             {
