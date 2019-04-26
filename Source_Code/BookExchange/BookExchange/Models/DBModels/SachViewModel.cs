@@ -7,8 +7,12 @@ namespace BookExchange.Models.DBModels
 {
     public class SachViewModel
     {
-        public IEnumerable<Sach> saches { get; set; }
+        public IEnumerable<Sach> SachMoi { get; set; }
+        public IEnumerable<Sach> AllSach { get; set; }
+        public IEnumerable<Sach> SachKinhTe { get; set; }
+        public IEnumerable<Sach> SachTruyenTranh { get; set; }
+        public IEnumerable<Sach> SachThieuNhi { get; set;}
+        public IEnumerable<Sach> SachTapChi { get; set; }
         public string UrlImage = "../images/img-post/";
-        public string UrlDetail = "../Post/Detail/";
     }
 }
