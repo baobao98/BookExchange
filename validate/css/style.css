@@ -1,0 +1,8 @@
+ h2{
+            text-align:center;
+        }
+        #check_user{
+            padding: 5px;
+            display:block;
+            border:1px solid red;
+        }

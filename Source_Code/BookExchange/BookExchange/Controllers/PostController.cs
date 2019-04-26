@@ -53,13 +53,13 @@ namespace BookExchange.Controllers
             if (idTL != 0)
             {
                 List<Sach> ds = null;
-                ds = _context.Sach.Where(s => s.MaTl == idTL).OrderByDescending(n => n.NgayDang).Include(n => n.AnhSach).Include(n => n.MaTtNavigation).ToList();
+                ds = _context.Sach.Where(s => s.MaTl == idTL).OrderByDescending(n => n.NgayDang).Include(n => n.AnhSach).Include(n => n.MaTtNavigation).Include(n => n.TacGia).ToList();
                 return View("Search", ds.Take(12).ToList());
             }
             else
             {
                 List<Sach> lstSach = new List<Sach>();
-                lstSach.AddRange(_context.Sach.Where(s => s.TenSach.Contains(keyword)).OrderByDescending(n => n.NgayDang).Include(n => n.AnhSach).Include(n => n.MaTtNavigation).ToList());
+                lstSach.AddRange(_context.Sach.Where(s => s.TenSach.Contains(keyword)).OrderByDescending(n => n.NgayDang).Include(n => n.AnhSach).Include(n => n.MaTtNavigation).Include(n => n.TacGia).ToList());
 
                 //List<TacGia> lstTacGia = _context.TacGia.Where(n => n.TenTg.Contains(keyWord)).Include(n => n.MaSachNavigation).ToList();
 
