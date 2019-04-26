@@ -1,0 +1,7 @@
+﻿@model List<BookExchange.Models.DBModelsP.CatalogItem>
+
+@foreach (var item in Model)
+{
+    <li><a asp-action="Search" asp-controller="Post" asp-route-idTL="@item.matl">@item.tentl <span>@item.soLuong</span></a></li>
+}
+            

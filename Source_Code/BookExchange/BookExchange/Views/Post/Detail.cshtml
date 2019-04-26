@@ -1,4 +1,4 @@
-﻿
+﻿@model BookExchange.Models.DBModels.Sach
 @{
     ViewData["Title"] = "Detail";
 }
@@ -12,39 +12,60 @@
                         <div class="col-lg-6 col-12">
                             <div class="wn__fotorama__wrapper">
                                 <div class="fotorama wn__fotorama__action" data-nav="thumbs">
-                                    <a href="1.jpg"><img src="~/images/product/1.jpg" alt=""></a>
-                                    <a href="2.jpg"><img src="~/images/product/2.jpg" alt=""></a>
-                                    <a href="3.jpg"><img src="~/images/product/3.jpg" alt=""></a>
-                                    <a href="4.jpg"><img src="~/images/product/4.jpg" alt=""></a>
-                                    <a href="5.jpg"><img src="~/images/product/5.jpg" alt=""></a>
-                                    <a href="6.jpg"><img src="~/images/product/6.jpg" alt=""></a>
-                                    <a href="7.jpg"><img src="~/images/product/7.jpg" alt=""></a>
-                                    <a href="8.jpg"><img src="~/images/product/8.jpg" alt=""></a>
+                                    @foreach (var sach in Model.AnhSach)
+                                    {
+                                        var path = "~/images/img-post/" + @sach.ImgUrl;
+                                        //var path = "~/images/img-post/5-centimet.gif";
+                                        <a href="#"><img src="@Url.Content(path)" alt=""></a>
+                                    }
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-6 col-12">
                             <div class="product__info__main">
-                                 <h1><span>Tên cuốn sách</span></h1> 
-                                 <h4>Tác Giả</h4>
-                                 
-                                 <div class="product__overview">
-                                     <p>Người đăng:</p>
-                                     <p>Ngày đăng:</p>
-                                     <h5>Thông tin liên hệ</h5>
-                                     <!--Thông tin liên hệ-->
-                                     <p>SDT: Người đăng</p>
-                                     <p>Email</p>
-                                     <p>Giới tính: </p>
-                                     <p>Tình trạng cuốn sách:</p>
-                                     <p>Hình thức:</p>
-                                 </div>
-                                <div class="product_meta">
-                                    <span class="posted_in">
-                                        Thể loại sách:
-                                        <a href="#">Thể loại sách điển ở đây</a>
-                                    </span>
+                                <h1><span>@Model.TenSach</span></h1>
+                                <p style=" font-style: italic; color: gray">Tác Giả: @Model.TacGia.ElementAt(0).TenTg</p>
+
+                                <div class="product__overview">
+                                    <p>Người Đăng : @Model.MaKhNavigation.HoTen</p>
+                                    <p>Ngày đăng : @Model.NgayDang</p>
+                                    @if (@Model.DaBan == true)
+                                    {
+                                        <p>Tình trạng cuốn sách: Đã bán </p>
+                                    }
+                                    else
+                                    {
+                                        <p>Tình trạng cuốn sách: Chưa bán </p>
+                                    }
+                                    @if (@Model.MaTtNavigation.MaTt == 2)
+                                    {
+                                        <p>Hình thức: @Model.MaTtNavigation.TenTt</p>
+                                        <div class="price-box">
+                                            <span>@Model.Gia VNĐ</span>
+                                        </div>
+
+                                    }
+                                    else
+                                    {
+                                        <p>Hình thức: @Model.MaTtNavigation.TenTt</p>
+                                    }
+
+                                    <hr />
+                                    <br />
+                                    <h4>Thông tin liên hệ</h4>
+                                    <!--Thông tin liên hệ-->
+                                    <p>SDT: @Model.MaKhNavigation.DienThoai</p>
+                                    <p>Email: @Model.MaKhNavigation.Email</p>
+                                    <div class="product_meta">
+                                        <span class="posted_in">
+                                            Thể loại sách:
+                                            <a style="color:#DD9C8F" asp-action="Search" asp-controller="Post" asp-route-idTL="@Model.MaTlNavigation.MaTl">@Model.MaTlNavigation.TenTl</a>
+                                        </span>
+                                    </div>
+
+
                                 </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -57,7 +78,7 @@
                         <!-- Start Single Tab Content -->
                         <div class="pro__tab_label tab-pane fade show active" id="nav-details" role="tabpanel">
                             <div class="description__attribute">
-                                Mô tả chi tiêt cuốn sách (Thuộc tính mô tả trong csdl)
+                                @Model.MoTa
                             </div>
                         </div>
                         <!-- End Single Tab Content -->
@@ -167,32 +188,21 @@
                     </div>
                 </div>
             </div>
+            @*insert catalog here*@
+
             <div class="col-lg-3 col-12 md-mt-40 sm-mt-40">
                 <div class="shop__sidebar">
                     <aside class="wedget__categories poroduct--cat">
-                        <h3 class="wedget__title">Product Categories</h3>
+                        <h3 class="wedget__title">Book Categories</h3>
                         <ul>
-                            <li><a href="#">Biography <span>(3)</span></a></li>
-                            <li><a href="#">Business <span>(4)</span></a></li>
-                            <li><a href="#">Cookbooks <span>(6)</span></a></li>
-                            <li><a href="#">Health & Fitness <span>(7)</span></a></li>
-                            <li><a href="#">History <span>(8)</span></a></li>
-                            <li><a href="#">Mystery <span>(9)</span></a></li>
-                            <li><a href="#">Inspiration <span>(13)</span></a></li>
-                            <li><a href="#">Romance <span>(20)</span></a></li>
-                            <li><a href="#">Fiction/Fantasy <span>(22)</span></a></li>
-                            <li><a href="#">Self-Improvement <span>(13)</span></a></li>
-                            <li><a href="#">Humor Books <span>(17)</span></a></li>
-                            <li><a href="#">Harry Potter <span>(20)</span></a></li>
-                            <li><a href="#">Land of Stories <span>(34)</span></a></li>
-                            <li><a href="#">Kids' Music <span>(60)</span></a></li>
-                            <li><a href="#">Toys & Games <span>(3)</span></a></li>
-                            <li><a href="#">hoodies <span>(3)</span></a></li>
+                            @await Component.InvokeAsync("bookCatalog")
                         </ul>
                     </aside>
                 </div>
             </div>
+
+            @*End catalog*@
         </div>
-    </div>
-</div>
+            </div>
+        </div>
 <!-- End main Content -->

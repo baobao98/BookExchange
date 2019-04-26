@@ -6,13 +6,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BookExchange.Models.DBModels;
+using RES.Models.Securities;
 
 namespace BookExchange.Controllers
 {
     public class UserController : Controller
     {
         private readonly BookExchangeDBContext _context = new BookExchangeDBContext();
-        
+
         // GET: User
         public async Task<IActionResult> Index()
         {
@@ -39,27 +40,53 @@ namespace BookExchange.Controllers
             return View(user);
         }
 
-        // GET: User/Create
-        public IActionResult Create()
+        [HttpGet]
+        [Route("dangky")]
+        public IActionResult Signin()
         {
-            ViewData["Idaccount"] = new SelectList(_context.Account, "MaTk", "MatKhau");
             return View();
         }
 
-        // POST: User/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Route("dangky")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MaKh,HoTen,NgaySinh,GioiTinh,DienThoai,Email,Idaccount,DiaChi")] User user)
+        public async Task<IActionResult> Signin([Bind("HoTen,NgaySinh,GioiTinh,DienThoai,Email,DiaChi")] User user, string username = "", string password = "", string re_password = "")
         {
             if (ModelState.IsValid)
             {
-                _context.Add(user);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (password == re_password)
+                {
+                    try
+                    {
+                        Account account = _context.Account.Where(n => n.TaiKhoan == username).FirstOrDefault();
+
+                        if (account != null)
+                        {
+                            ModelState.AddModelError(string.Empty, "Tên đăng nhập đã tồn tại");
+                            return View(user);
+                        }
+                        else
+                        {
+                            account = new Account(username, HashPwdTool.GeneratePassword(password));
+                            user.IdaccountNavigation = account;
+                            _context.Add(user);
+                            await _context.SaveChangesAsync();
+                            return RedirectToAction("Login", "Account");
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        ModelState.AddModelError(string.Empty, "Lỗi hệ thống. Vui lòng thử lại");
+                        return View(user);
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Mật khẩu không khớp");
+                    return View(user);
+                }
             }
-            ViewData["Idaccount"] = new SelectList(_context.Account, "MaTk", "MatKhau", user.Idaccount);
+            
             return View(user);
         }
 
