@@ -1,8 +1,10 @@
 ﻿using BookExchange.Models.DBModels;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace BookExchange.Models
 {
@@ -15,6 +17,7 @@ namespace BookExchange.Models
         public string MoTa { get; set; }
         public decimal? Gia { get; set; }
         public string TenTacGia { get; set; }
+        public List<IFormFile> File { get; set; }
 
         public virtual ICollection<AnhSach> AnhSach { get; set; }
         public virtual ICollection<LoaiMuonNhan> LoaiMuonNhan { get; set; }

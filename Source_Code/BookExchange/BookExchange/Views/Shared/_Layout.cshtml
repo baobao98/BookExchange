@@ -50,7 +50,7 @@
                                 <li class="drop with--one--item"><a asp-action="Index" asp-controller="Home">Home</a></li>
 
                                 <li class="drop">
-                                    <a href="shop-grid.html">Sách</a>
+                                    <a href="#">Sách</a>
                                     <div class="megamenu mega03">
                                         <ul class="item item03">
                                             <li><a asp-action="Search" asp-controller="Post" asp-route-idTL="1">Tiểu thuyết lãng mạn </a></li>
@@ -98,15 +98,12 @@
                                         <a class="setting__active" href="#"></a>
                                         <div class="searchbar__content setting__block">
                                             <div class="content-inner">
-                                                <strong class="label switcher-label">
-                                                    <span>My Account</span>
-                                                </strong>
                                                 <div class="switcher-currency">
                                                     <div class="switcher-options">
                                                         <div class="switcher-currency-trigger">
                                                             <div class="setting__menu">
-                                                                <span><a href="#">My Account</a></span>
-                                                                <span><a asp-action="Signout" asp-controller="Account">Signout</a></span>
+                                                                <span><a asp-action="Manager" asp-controller="Post">Quản lý bài đăng</a></span>
+                                                                <span><a asp-action="Signout" asp-controller="Account">Đăng xuất</a></span>
                                                             </div>
                                                         </div>
                                                     </div>

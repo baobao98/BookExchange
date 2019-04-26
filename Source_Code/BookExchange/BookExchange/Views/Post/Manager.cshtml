@@ -14,7 +14,8 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="shop__list__wrapper d-flex flex-wrap flex-md-nowrap justify-content-between">
-                            <div class="orderby__wrapper" style="padding-left: 86%">
+                            <div class="orderby__wrapper" style="padding-left: 70%; display: inherit">
+                                <a asp-action="CreatePost" asp-controller="Post">Tạo bài đăng</a>
                                 <select class="shot__byselect">
                                     <option>Đã đăng</option>
                                     <option>Đã ẩn</option>
@@ -45,7 +46,7 @@
                                             @if (item.Gia != null)
                                             {
                                                 <ul class="prize d-flex">
-                                                    <li>@item.Gia</li>
+                                                    <li>@string.Format("{0:0,0 VND}", item.Gia)</li>
                                                 </ul>
                                             }
                                             <div class="action">
