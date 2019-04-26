@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BookExchange.Models.DBModels;
 using Microsoft.EntityFrameworkCore;
+using BookExchange.Models;
 
 namespace BookExchange.Controllers
 {
@@ -31,9 +32,35 @@ namespace BookExchange.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreatePost(Sach sach)
+        public IActionResult CreatePost(PostNewViewModel viewModel)
         {
-            return View();
+            int idUser = 1;
+            Sach sach = new Sach
+            {
+                MaSach = idUser.ToString() + DateTime.Now.ToString(),
+                TenSach=viewModel.TenSach,
+                MaKh=idUser,
+                MaTt=viewModel.MaTt,
+                MaTl=viewModel.MaTl,
+                MoTa=viewModel.MoTa,
+                Gia=viewModel.Gia,
+                NgayDang=DateTime.Now,
+                DaBan=false
+            };
+
+
+            _context.Sach.Add(sach);
+            TacGia tacGia = new TacGia
+            {
+                TenTg=viewModel.TenTacGia,
+                MaSach=sach.MaSach
+            };
+
+            _context.TacGia.Add(tacGia);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Home");
+
         }
 
 
