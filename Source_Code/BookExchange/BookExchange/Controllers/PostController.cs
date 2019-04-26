@@ -39,22 +39,22 @@ namespace BookExchange.Controllers
             Sach sach = new Sach
             {
                 MaSach = idUser.ToString() + DateTime.Now.ToString(),
-                TenSach=viewModel.TenSach,
-                MaKh=idUser,
-                MaTt=viewModel.MaTt,
-                MaTl=viewModel.MaTl,
-                MoTa=viewModel.MoTa,
-                Gia=viewModel.Gia,
-                NgayDang=DateTime.Now,
-                DaBan=false
+                TenSach = viewModel.TenSach,
+                MaKh = idUser,
+                MaTt = viewModel.MaTt,
+                MaTl = viewModel.MaTl,
+                MoTa = viewModel.MoTa,
+                Gia = viewModel.Gia,
+                NgayDang = DateTime.Now,
+                DaBan = false
             };
 
 
             _context.Sach.Add(sach);
             TacGia tacGia = new TacGia
             {
-                TenTg=viewModel.TenTacGia,
-                MaSach=sach.MaSach
+                TenTg = viewModel.TenTacGia,
+                MaSach = sach.MaSach
             };
 
             _context.TacGia.Add(tacGia);
@@ -140,10 +140,13 @@ namespace BookExchange.Controllers
         {
             try
             {
-                Sach sach = _context.Sach.Find(id);
+                Sach sach = _context.Sach.Where(n => n.MaSach == id).Include(n => n.MaTlNavigation).Include(n => n.MaTtNavigation).FirstOrDefault();
 
                 if (sach != null)
                 {
+                    List<TheLoai> lstTL = _context.TheLoai.ToList();
+                    ViewBag.lstTheLoai = lstTL;
+
                     return View(sach);
                 }
                 else
@@ -155,6 +158,52 @@ namespace BookExchange.Controllers
             {
                 return RedirectToAction("Manager");
             }
+        }
+
+        [Route("post-edit")]
+        [HttpPost]
+        public async Task<IActionResult> EditAsync([Bind("MaSach,TenSach,MaTt,MaTl,Gia,MoTa")] Sach sach)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    Sach sachDB = _context.Sach.Find(sach.MaSach);
+                    sachDB.TenSach = sach.TenSach;
+                    sachDB.MaTl = sach.MaTl;
+                    sachDB.MaTt = sach.MaTt;
+                    sachDB.MoTa = sach.MoTa;
+                    if (sach.MaTt != 2)
+                    {
+                        sachDB.Gia = null;
+                    }
+                    else
+                    {
+                        sachDB.Gia = sach.Gia;
+                    }
+
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!SachExists(sach.MaSach))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction("Manager");
+            }
+
+            return View(sach);
+        }
+
+        private bool SachExists(string id)
+        {
+            return _context.Sach.Any(e => e.MaSach == id);
         }
     }
 }
