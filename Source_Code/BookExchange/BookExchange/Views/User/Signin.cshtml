@@ -10,6 +10,7 @@
         <div class="container margin-center row" style="">
             <h3 class="col-12 text-center mb-5 account__title">Đăng ký tài khoản</h3>
             <div asp-validation-summary="ModelOnly" class="col-12 text-danger"></div>
+            
             <div class="col-lg-6 col-sm-12">
                 <div class="my__account__wrapper">
                     <div class="account__form">
@@ -50,22 +51,25 @@
                     </div>
                     <div class="input__box">
                         <label>Tài khoản <span>*</span></label>
-                        <input type="text" name="username">
+                        <input type="text" id="username" name="username" />
+                        <span id="textdanger-username" class="text-danger"></span>
                     </div>
                     <div class="input__box">
                         <label>Mật khẩu<span>*</span></label>
-                        <input type="password" name="password">
+                        <input type="password" id="password" name="password" />
+                        <span id="textdanger-password" class="text-danger"></span>
                     </div>
                     <div class="input__box">
                         <label>Nhập lại mật khẩu<span>*</span></label>
-                        <input type="password" name="re_password">
+                        <input type="password" id="re_password" name="re_password" />
+                        <span id="textdanger-repassword" class="text-danger"></span>
                     </div>
-
+                    
                 </div>
             </div>
             <div class="account__form col-12 btn_register">
                 <div class="form__btn">
-                    <button>Đăng ký</button>
+                    <button id="submit">Đăng ký</button>
                 </div>
             </div>
 
@@ -73,3 +77,29 @@
     </form>
 </section>
 <!-- End My Account Area -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#textdanger-username").hide().html();
+        $("#textdanger-password").hide().html();
+        $("#textdanger-repassword").hide().html();
+        $("#submit").click(function () {
+
+            var username = $("#username").val();
+            var password = $("#password").val();
+            var re_password = $("#re_password").val();
+            if (username == '') {
+                $("#textdanger-username").html("Tài khoản không được để trống").show();
+                return false;
+            }
+            if (password == '') {
+                $("#textdanger-password").html("Mật khẩu không được để trống").show();
+                return false;
+            }
+            if (re_password == '') {
+                $("#textdanger-repassword").html("Bạn cần nhập lại mật khẩu").show();
+                return false;
+            }
+        });
+    });
+</script>
