@@ -22,6 +22,20 @@ namespace BookExchange.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public IActionResult CreatePost()
+        {
+            ViewBag.TheLoai = _context.TheLoai.ToList();
+            ViewBag.TrangThai = _context.TrangThai.ToList();
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CreatePost(Sach sach)
+        {
+            return View();
+        }
+
 
         [HttpGet("{id}")]
         public IActionResult Detail(string id = "nam-centimet-tren-giay")
