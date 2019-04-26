@@ -14,4 +14,11 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Reference Include="CKFinder">
+      <HintPath>..\..\..\..\..\..\Desktop\CKFinder.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

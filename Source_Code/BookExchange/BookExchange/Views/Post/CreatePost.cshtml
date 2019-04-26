@@ -4,6 +4,10 @@
     ViewData["Title"] = "View";
 }
 
+@section scripts {
+
+}
+
 <h1 style="margin-left:auto">Thông tin bài đăng</h1>
 <hr />
 <div class="row" style="margin-left:auto">
@@ -11,10 +15,10 @@
         <form asp-action="View">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             @*<div class="form-group">
-            <label asp-for="MaSach" class="control-label"></label>
-            <input asp-for="MaSach" class="form-control" />
-            <span asp-validation-for="MaSach" class="text-danger"></span>
-        </div>*@
+                    <label asp-for="MaSach" class="control-label"></label>
+                    <input asp-for="MaSach" class="form-control" />
+                    <span asp-validation-for="MaSach" class="text-danger"></span>
+                </div>*@
             <div class="form-group">
                 <label asp-for="TenSach" class="control-label"></label>
                 <input asp-for="TenSach" class="form-control" />
@@ -26,15 +30,15 @@
                 <span asp-validation-for="TenTacGia" class="text-danger"></span>
             </div>
             @*<div class="form-group form-check">
-            <label class="form-check-label">
-                <input class="form-check-input" asp-for="DaBan" /> @Html.DisplayNameFor(model => model.DaBan)
-            </label>
-        </div>*@
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="DaBan" /> @Html.DisplayNameFor(model => model.DaBan)
+                    </label>
+                </div>*@
             @*<div class="form-group">
-            <label asp-for="MaKh" class="control-label"></label>
-            <input asp-for="MaKh" class="form-control" />
-            <span asp-validation-for="MaKh" class="text-danger"></span>
-        </div>*@
+                    <label asp-for="MaKh" class="control-label"></label>
+                    <input asp-for="MaKh" class="form-control" />
+                    <span asp-validation-for="MaKh" class="text-danger"></span>
+                </div>*@
             <div class="form-group">
                 <label asp-for="MaTt" class="control-label">Trạng thái</label>
                 @Html.DropDownListFor(m => m.MaTt, new SelectList(ViewBag.TrangThai, "MaTt", "TenTt"), null, new { @class = "form-control" })
@@ -53,17 +57,17 @@
                 <span asp-validation-for="MoTa" class="text-danger"></span>
             </div>
             @*<div class="form-group">
-            <label asp-for="NgayDang" class="control-label"></label>
-            <input asp-for="NgayDang" class="form-control" />
-            <span asp-validation-for="NgayDang" class="text-danger"></span>
-        </div>*@
+                    <label asp-for="NgayDang" class="control-label"></label>
+                    <input asp-for="NgayDang" class="form-control" />
+                    <span asp-validation-for="NgayDang" class="text-danger"></span>
+                </div>*@
             <div class="form-group">
                 <label asp-for="Gia" class="control-label"></label>
                 <input asp-for="Gia" class="form-control" />
                 <span asp-validation-for="Gia" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary" id="btnSubmitPost" />
             </div>
         </form>
     </div>

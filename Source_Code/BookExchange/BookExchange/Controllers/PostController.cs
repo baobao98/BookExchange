@@ -50,13 +50,25 @@ namespace BookExchange.Controllers
 
 
             _context.Sach.Add(sach);
+            _context.SaveChanges();
+
             TacGia tacGia = new TacGia
             {
-                TenTg=viewModel.TenTacGia,
-                MaSach=sach.MaSach
+                TenTg = viewModel.TenTacGia,
+                MaSachNavigation = sach
             };
 
             _context.TacGia.Add(tacGia);
+            _context.SaveChanges();
+
+
+            AnhSach anh = new AnhSach
+            {
+                MaSach=sach.MaSach,
+                ImgUrl= "preview.jpg"
+            };
+
+            _context.AnhSach.Add(anh);
             _context.SaveChanges();
 
             return RedirectToAction("Index", "Home");
