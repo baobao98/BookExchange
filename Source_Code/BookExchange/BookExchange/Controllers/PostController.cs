@@ -16,6 +16,6 @@ namespace BookExchange.Controllers
         public IActionResult Detail(int id)
         {
             return View();
-        }
+        }   
     }
 }
