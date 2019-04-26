@@ -11,10 +11,10 @@ namespace BookExchange.Controllers
     public class PostController : Controller
     {
         private BookExchangeDBContext _context;// = new BookExchangeDBContext();
-        
+
         public PostController()
         {
-            _context =new BookExchangeDBContext();
+            _context = new BookExchangeDBContext();
         }
 
 
@@ -23,19 +23,39 @@ namespace BookExchange.Controllers
             return View();
         }
 
+        [HttpGet("{id}")]
         public IActionResult Detail(string id = "nam-centimet-tren-giay")
         {
             //id = "a";
-            var sachDetial = _context.Sach.Where(s => s.MaSach == id).Include(x => x.MaKhNavigation).Include(x => x.AnhSach).Include(x => x.MaKhNavigation).Include(x => x.MaTtNavigation).Include(x=>x.TacGia).Include(x=>x.MaTlNavigation).SingleOrDefault();
+            var sachDetial = _context.Sach.Where(s => s.MaSach == id).Include(x => x.MaKhNavigation).Include(x => x.AnhSach).Include(x => x.MaKhNavigation).Include(x => x.MaTtNavigation).Include(x => x.TacGia).Include(x => x.MaTlNavigation).SingleOrDefault();
             //List<string> anh=_context.AnhSach.Where(a=>a.MaSach==id)
             return View("Detail", sachDetial);
         }
-        public IActionResult SearchCatalog(int idTL)
+
+        [Route("search")]
+        [HttpGet("{idTL}/{keyword}")]
+        public IActionResult Search(int idTL = 0, string keyword = "")
         {
-            //var Theloai = _context.TheLoai.Where(t => t.MaTl == idTL).SingleOrDefault();
-            List<Sach> ds = new List<Sach>();
-            ds = _context.Sach.Where(s => s.MaTl == idTL).ToList();
-            return View("CatalogDetail",ds);
+            if (idTL != 0)
+            {
+                List<Sach> ds = null;
+                ds = _context.Sach.Where(s => s.MaTl == idTL).OrderByDescending(n => n.NgayDang).Include(n => n.AnhSach).Include(n => n.MaTtNavigation).ToList();
+                return View("Search", ds.Take(12).ToList());
+            }
+            else
+            {
+                List<Sach> lstSach = new List<Sach>();
+                lstSach.AddRange(_context.Sach.Where(s => s.TenSach.Contains(keyword)).OrderByDescending(n => n.NgayDang).Include(n => n.AnhSach).Include(n => n.MaTtNavigation).ToList());
+
+                //List<TacGia> lstTacGia = _context.TacGia.Where(n => n.TenTg.Contains(keyWord)).Include(n => n.MaSachNavigation).ToList();
+
+                //foreach (var item in lstTacGia)
+                //{
+                //    lstSach.Add(item.MaSachNavigation);
+                //}
+
+                return View("Search", lstSach.Take(12).ToList());
+            }
         }
     }
 }

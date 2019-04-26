@@ -9,5 +9,6 @@ namespace BookExchange.Models.DBModels
     {
         public IEnumerable<Sach> saches { get; set; }
         public string UrlImage = "../images/img-post/";
+        public string UrlDetail = "../Post/Detail/";
     }
 }

@@ -44,7 +44,6 @@ namespace BookExchange.Controllers
         [Route("dangky")]
         public IActionResult Signin()
         {
-            ViewData["Idaccount"] = new SelectList(_context.Account, "MaTk", "MatKhau");
             return View();
         }
 
@@ -59,11 +58,21 @@ namespace BookExchange.Controllers
                 {
                     try
                     {
-                        Account account = new Account(username, HashPwdTool.GeneratePassword(password));
-                        user.IdaccountNavigation = account;
-                        _context.Add(user);
-                        await _context.SaveChangesAsync();
-                        return RedirectToAction("Login", "Account");
+                        Account account = _context.Account.Where(n => n.TaiKhoan == username).FirstOrDefault();
+
+                        if (account != null)
+                        {
+                            ModelState.AddModelError(string.Empty, "Tên đăng nhập đã tồn tại");
+                            return View(user);
+                        }
+                        else
+                        {
+                            account = new Account(username, HashPwdTool.GeneratePassword(password));
+                            user.IdaccountNavigation = account;
+                            _context.Add(user);
+                            await _context.SaveChangesAsync();
+                            return RedirectToAction("Login", "Account");
+                        }
                     }
                     catch (Exception)
                     {
@@ -77,8 +86,7 @@ namespace BookExchange.Controllers
                     return View(user);
                 }
             }
-
-            ViewData["Idaccount"] = new SelectList(_context.Account, "MaTk", "MatKhau", user.Idaccount);
+            
             return View(user);
         }
 

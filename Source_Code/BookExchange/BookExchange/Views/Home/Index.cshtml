@@ -24,9 +24,10 @@
                     <div class="col-lg-3 col-md-4 col-sm-6 col-12">
                         <div class="product__thumb">
                             @{string urlImageFirst = Model.UrlImage + item.AnhSach.ElementAt(0).ImgUrl;
+                                string urlDetail = Model.UrlDetail + item.MaSach;
                             }
-                            <a class="first__img" href="single-product.html"><img src="@urlImageFirst" alt="product image"></a>
-                            <a class="second__img animation1" href="single-product.html"><img src="@urlImageFirst" alt="product image"></a>
+                            <a class="first__img" href="@urlDetail"><img src="@urlImageFirst" alt="product image" ></a>
+                            <a class="second__img animation1" href="@urlDetail"><img src="@urlImageFirst" alt="product image"></a>
                             <div class="hot__box">
                                 <!--Tình trạng cuốn sách-->
                                 <span class="hot-label">@item.MaTtNavigation.TenTt</span>
