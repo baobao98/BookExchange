@@ -1,4 +1,4 @@
-﻿@model BookExchange.Models.DBModels.Sach
+﻿@model BookExchange.Models.PostNewViewModel
 
 @{
     ViewData["Title"] = "View";
@@ -21,9 +21,9 @@
                 <span asp-validation-for="TenSach" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TacGia" class="control-label">Tên tác giả</label>
-                <input asp-for="TacGia" class="form-control" />
-                <span asp-validation-for="TacGia" class="text-danger"></span>
+                <label asp-for="TenTacGia" class="control-label">Tên tác giả</label>
+                <input asp-for="TenTacGia" class="form-control" />
+                <span asp-validation-for="TenTacGia" class="text-danger"></span>
             </div>
             @*<div class="form-group form-check">
             <label class="form-check-label">
