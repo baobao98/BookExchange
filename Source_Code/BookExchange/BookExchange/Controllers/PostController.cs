@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BookExchange.Models.DBModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 
 namespace BookExchange.Controllers
 {
@@ -55,6 +56,63 @@ namespace BookExchange.Controllers
                 //}
 
                 return View("Search", lstSach.Take(12).ToList());
+            }
+        }
+
+        [Route("post-manager")]
+        public IActionResult Manager()
+        {
+            int idUser = int.Parse(HttpContext.Session.GetString("IdAccount") ?? "0");
+
+            if (idUser == 0)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            List<Sach> lstPost = _context.Sach.Where(n => n.MaKhNavigation.IdaccountNavigation.MaTk == idUser && n.DaBan == false).Include(n => n.MaTlNavigation).Include(n => n.AnhSach).Include(n => n.MaTtNavigation).ToList();
+
+            return View(lstPost);
+        }
+
+        public IActionResult Delete(string id)
+        {
+            Sach sach = _context.Sach.Find(id);
+
+            if (sach != null)
+            {
+                try
+                {
+                    sach.DaBan = true;
+                    _context.SaveChanges();
+                }
+                catch (Exception)
+                {
+
+                }
+            }
+
+            return RedirectToAction("Manager");
+        }
+
+        [Route("post-edit")]
+        public IActionResult Edit(string id)
+        {
+            try
+            {
+                Sach sach = _context.Sach.Find(id);
+
+                if (sach != null)
+                {
+                    return View(sach);
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Manager");
             }
         }
     }
