@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using BookExchange.Models.DBModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
+using BookExchange.Models;
 
 namespace BookExchange.Controllers
 {
@@ -23,6 +24,46 @@ namespace BookExchange.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public IActionResult CreatePost()
+        {
+            ViewBag.TheLoai = _context.TheLoai.ToList();
+            ViewBag.TrangThai = _context.TrangThai.ToList();
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CreatePost(PostNewViewModel viewModel)
+        {
+            int idUser = 1;
+            Sach sach = new Sach
+            {
+                MaSach = idUser.ToString() + DateTime.Now.ToString(),
+                TenSach=viewModel.TenSach,
+                MaKh=idUser,
+                MaTt=viewModel.MaTt,
+                MaTl=viewModel.MaTl,
+                MoTa=viewModel.MoTa,
+                Gia=viewModel.Gia,
+                NgayDang=DateTime.Now,
+                DaBan=false
+            };
+
+
+            _context.Sach.Add(sach);
+            TacGia tacGia = new TacGia
+            {
+                TenTg=viewModel.TenTacGia,
+                MaSach=sach.MaSach
+            };
+
+            _context.TacGia.Add(tacGia);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Home");
+
+        }
+
 
         [HttpGet("{id}")]
         public IActionResult Detail(string id = "nam-centimet-tren-giay")

@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewBag.Title = "UploadImage";
+}
+
+<h2>Tải ảnh</h2>
+<div class="form-inline"">
+    <h3>Chọn hình ảnh</h3> <input type="text" name="picture" id="picture"/>
+    <input type="file" id="fileUpload" multiple accept="image/*" name="fileUpload" style="display:none"/>
+    <input type="button" id="btnUpload" value="..." class="btn btn-success"/>
+    <hr />
+</div>
+<img id="pictureUpload" width="300"/>
+@section upload
+{
+    <script>
+        $(function () {// sau khi load page xong thì function này sẵn sàng thực hiện
+            // đăng kí sự kiện click nút btnUpload
+            $('#btnUpload').click(function () {
+                console.log('da nhan su kien');
+                $('#fileUpload').trigger('click');
+            });
+            // bắt sự kiện change data của fileUpload
+            $('#fileUpload').change(function () {
+                
+                var files = $('#fileUpload').get(0).files;
+               
+               
+                var formData = new FormData(); // đối tượng dạng javascirpt DOM
+                //đưa dữ liệu vào form 
+                
+                //post dữ liệu lên server thông qua ajax
+                for (var i = 0; i < files.length; i++) {
+                    formData.append(files[i].name, files[i]);
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/Home/ProcessUpload',//đường dẫn post lên. Vào controller Home và action ProcessUpload để xử lí
+                    contentType: false, // không có header
+                    processData: false, //không xử lí dữ liệu vì nó sẽ mặc định ajax sẽ convert dữ liệu sang dạng văn bản 
+                    data: formData,
+                    success: function (urlImage)
+                    {
+                        
+                    },
+                    error: function (err) {
+                        alert(' có lỗi '+ err.statusText);
+                    }
+                });
+            });
+        });
+
+    </script>
+}
