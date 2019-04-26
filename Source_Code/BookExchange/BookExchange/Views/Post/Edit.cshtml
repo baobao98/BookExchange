@@ -1,16 +1,15 @@
-﻿@model BookExchange.Models.DBModels.User
+﻿@model BookExchange.Models.DBModels.Sach
 
 @{
-    ViewData["Title"] = "Signin";
+    ViewData["Title"] = "Edit";
 }
 
-<!-- Start My Account Area -->
-<section class="my_account_area pt--80 pb--55 bg--white">
+@*<section class="my_account_area pt--80 pb--55 bg--white">
     <form asp-action="Signin" asp-controller="User">
         <div class="container margin-center row" style="">
-            <h3 class="col-12 text-center mb-5 account__title">Đăng ký tài khoản</h3>
+            <h3 class="col-12 text-center mb-5 account__title">Chỉnh sửa bài đăng</h3>
             <div asp-validation-summary="ModelOnly" class="col-12 text-danger"></div>
-            
+
             <div class="col-lg-6 col-sm-12">
                 <div class="my__account__wrapper">
                     <div class="account__form">
@@ -64,7 +63,7 @@
                         <input type="password" id="re_password" name="re_password" />
                         <span id="textdanger-repassword" class="text-danger"></span>
                     </div>
-                    
+
                 </div>
             </div>
             <div class="account__form col-12 btn_register">
@@ -75,31 +74,50 @@
 
         </div>
     </form>
-</section>
-<!-- End My Account Area -->
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $("#textdanger-username").hide().html();
-        $("#textdanger-password").hide().html();
-        $("#textdanger-repassword").hide().html();
-        $("#submit").click(function () {
+</section>*@
 
-            var username = $("#username").val();
-            var password = $("#password").val();
-            var re_password = $("#re_password").val();
-            if (username == '') {
-                $("#textdanger-username").html("Tài khoản không được để trống").show();
-                return false;
-            }
-            if (password == '') {
-                $("#textdanger-password").html("Mật khẩu không được để trống").show();
-                return false;
-            }
-            if (re_password == '') {
-                $("#textdanger-repassword").html("Bạn cần nhập lại mật khẩu").show();
-                return false;
-            }
-        });
-    });
-</script>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="MaSach" />
+            <div class="form-group">
+                <label asp-for="TenSach" class="control-label"></label>
+                <input asp-for="TenSach" class="form-control" />
+                <span asp-validation-for="TenSach" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaTt" class="control-label"></label>
+                <select asp-for="MaTt" class="form-control" asp-items="ViewBag.MaTt"></select>
+                <span asp-validation-for="MaTt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaTl" class="control-label"></label>
+                <select asp-for="MaTl" class="form-control" asp-items="ViewBag.MaTl"></select>
+                <span asp-validation-for="MaTl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MoTa" class="control-label"></label>
+                <input asp-for="MoTa" class="form-control" />
+                <span asp-validation-for="MoTa" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NgayDang" class="control-label"></label>
+                <input asp-for="NgayDang" class="form-control" />
+                <span asp-validation-for="NgayDang" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Gia" class="control-label"></label>
+                <input asp-for="Gia" class="form-control" />
+                <span asp-validation-for="Gia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+

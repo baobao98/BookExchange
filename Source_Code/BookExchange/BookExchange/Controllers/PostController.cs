@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BookExchange.Models.DBModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
+using BookExchange.Models;
 
 namespace BookExchange.Controllers
 {
@@ -22,6 +24,46 @@ namespace BookExchange.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public IActionResult CreatePost()
+        {
+            ViewBag.TheLoai = _context.TheLoai.ToList();
+            ViewBag.TrangThai = _context.TrangThai.ToList();
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CreatePost(PostNewViewModel viewModel)
+        {
+            int idUser = 1;
+            Sach sach = new Sach
+            {
+                MaSach = idUser.ToString() + DateTime.Now.ToString(),
+                TenSach=viewModel.TenSach,
+                MaKh=idUser,
+                MaTt=viewModel.MaTt,
+                MaTl=viewModel.MaTl,
+                MoTa=viewModel.MoTa,
+                Gia=viewModel.Gia,
+                NgayDang=DateTime.Now,
+                DaBan=false
+            };
+
+
+            _context.Sach.Add(sach);
+            TacGia tacGia = new TacGia
+            {
+                TenTg=viewModel.TenTacGia,
+                MaSach=sach.MaSach
+            };
+
+            _context.TacGia.Add(tacGia);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Home");
+
+        }
+
 
         [HttpGet("{id}")]
         public IActionResult Detail(string id = "nam-centimet-tren-giay")
@@ -39,13 +81,13 @@ namespace BookExchange.Controllers
             if (idTL != 0)
             {
                 List<Sach> ds = null;
-                ds = _context.Sach.Where(s => s.MaTl == idTL).OrderByDescending(n => n.NgayDang).Include(n => n.AnhSach).Include(n => n.MaTtNavigation).ToList();
+                ds = _context.Sach.Where(s => s.MaTl == idTL).OrderByDescending(n => n.NgayDang).Include(n => n.AnhSach).Include(n => n.MaTtNavigation).Include(n => n.TacGia).ToList();
                 return View("Search", ds.Take(12).ToList());
             }
             else
             {
                 List<Sach> lstSach = new List<Sach>();
-                lstSach.AddRange(_context.Sach.Where(s => s.TenSach.Contains(keyword)).OrderByDescending(n => n.NgayDang).Include(n => n.AnhSach).Include(n => n.MaTtNavigation).ToList());
+                lstSach.AddRange(_context.Sach.Where(s => s.TenSach.Contains(keyword)).OrderByDescending(n => n.NgayDang).Include(n => n.AnhSach).Include(n => n.MaTtNavigation).Include(n => n.TacGia).ToList());
 
                 //List<TacGia> lstTacGia = _context.TacGia.Where(n => n.TenTg.Contains(keyWord)).Include(n => n.MaSachNavigation).ToList();
 
@@ -55,6 +97,63 @@ namespace BookExchange.Controllers
                 //}
 
                 return View("Search", lstSach.Take(12).ToList());
+            }
+        }
+
+        [Route("post-manager")]
+        public IActionResult Manager()
+        {
+            int idUser = int.Parse(HttpContext.Session.GetString("IdAccount") ?? "0");
+
+            if (idUser == 0)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            List<Sach> lstPost = _context.Sach.Where(n => n.MaKhNavigation.IdaccountNavigation.MaTk == idUser && n.DaBan == false).Include(n => n.MaTlNavigation).Include(n => n.AnhSach).Include(n => n.MaTtNavigation).ToList();
+
+            return View(lstPost);
+        }
+
+        public IActionResult Delete(string id)
+        {
+            Sach sach = _context.Sach.Find(id);
+
+            if (sach != null)
+            {
+                try
+                {
+                    sach.DaBan = true;
+                    _context.SaveChanges();
+                }
+                catch (Exception)
+                {
+
+                }
+            }
+
+            return RedirectToAction("Manager");
+        }
+
+        [Route("post-edit")]
+        public IActionResult Edit(string id)
+        {
+            try
+            {
+                Sach sach = _context.Sach.Find(id);
+
+                if (sach != null)
+                {
+                    return View(sach);
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Manager");
             }
         }
     }

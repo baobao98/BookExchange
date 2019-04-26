@@ -25,7 +25,7 @@
                         <div class="product__thumb">
                             @{string urlImageFirst = Model.UrlImage + item.AnhSach.ElementAt(0).ImgUrl;
                             }
-                            <a class="first__img" asp-action="Detail" asp-controller="Post" asp-route-id="@item.MaSach"><img src="@urlImageFirst" alt="product image"></a>
+                            <a class="first__img" asp-action="Detail" asp-controller="Post" asp-route-id="@item.MaSach"><img src="@urlImageFirst" alt="product image" ></a>
                             <a class="second__img animation1" asp-action="Detail" asp-controller="Post" asp-route-id="@item.MaSach"><img src="@urlImageFirst" alt="product image"></a>
                             <div class="hot__box">
                                 <!--Tình trạng cuốn sách-->

@@ -23,34 +23,49 @@
                         </div>
                         <div class="col-lg-6 col-12">
                             <div class="product__info__main">
-                                 <h1><span>Tên cuốn sách: @Model.TenSach</span></h1> 
-                                 <h4>Tác Giả: @Model.TacGia.ElementAt(0).TenTg</h4>
-                                 
-                                 <div class="product__overview">
-                                     <p>Người đăng: @Model.MaKhNavigation.HoTen</p>
-                                     <p>Ngày đăng: @Model.NgayDang</p>
-                                     <h5>Thông tin liên hệ</h5>
-                                     <!--Thông tin liên hệ-->
-                                     <p>SDT: @Model.MaKhNavigation.DienThoai</p>
-                                     <p>Email: @Model.MaKhNavigation.Email</p>
-                                     <p>Giới tính: @Model.MaKhNavigation.GioiTinh</p>
-                                     @if (@Model.DaBan == true)
-                                     {
-                                     <p>Tình trạng cuốn sách: Đã bán </p>
-                                     }
-                                     else
-                                     {
-                                     <p>Tình trạng cuốn sách: Chưa bán </p>
-                                     }
+                                <h1><span>@Model.TenSach</span></h1>
+                                <p style=" font-style: italic; color: gray">Tác Giả: @Model.TacGia.ElementAt(0).TenTg</p>
 
-                                     <p>Hình thức: @Model.MaTtNavigation.TenTt</p>
-                                 </div>
-                                <div class="product_meta">
-                                    <span class="posted_in">
-                                        Thể loại sách:
-                                        <a href="#">@Model.MaTlNavigation.TenTl</a>
-                                    </span>
+                                <div class="product__overview">
+                                    <p>Người Đăng : @Model.MaKhNavigation.HoTen</p>
+                                    <p>Ngày đăng : @Model.NgayDang</p>
+                                    @if (@Model.DaBan == true)
+                                    {
+                                        <p>Tình trạng cuốn sách: Đã bán </p>
+                                    }
+                                    else
+                                    {
+                                        <p>Tình trạng cuốn sách: Chưa bán </p>
+                                    }
+                                    @if (@Model.MaTtNavigation.MaTt == 2)
+                                    {
+                                        <p>Hình thức: @Model.MaTtNavigation.TenTt</p>
+                                        <div class="price-box">
+                                            <span>@Model.Gia VNĐ</span>
+                                        </div>
+
+                                    }
+                                    else
+                                    {
+                                        <p>Hình thức: @Model.MaTtNavigation.TenTt</p>
+                                    }
+
+                                    <hr />
+                                    <br />
+                                    <h4>Thông tin liên hệ</h4>
+                                    <!--Thông tin liên hệ-->
+                                    <p>SDT: @Model.MaKhNavigation.DienThoai</p>
+                                    <p>Email: @Model.MaKhNavigation.Email</p>
+                                    <div class="product_meta">
+                                        <span class="posted_in">
+                                            Thể loại sách:
+                                            <a style="color:#DD9C8F" asp-action="Search" asp-controller="Post" asp-route-idTL="@Model.MaTlNavigation.MaTl">@Model.MaTlNavigation.TenTl</a>
+                                        </span>
+                                    </div>
+
+
                                 </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -175,10 +190,19 @@
             </div>
             @*insert catalog here*@
 
-            @await Component.InvokeAsync("bookCatalog")
+            <div class="col-lg-3 col-12 md-mt-40 sm-mt-40">
+                <div class="shop__sidebar">
+                    <aside class="wedget__categories poroduct--cat">
+                        <h3 class="wedget__title">Book Categories</h3>
+                        <ul>
+                            @await Component.InvokeAsync("bookCatalog")
+                        </ul>
+                    </aside>
+                </div>
+            </div>
 
             @*End catalog*@
         </div>
-    </div>
-</div>
+            </div>
+        </div>
 <!-- End main Content -->
